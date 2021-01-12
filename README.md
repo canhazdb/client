@@ -58,6 +58,7 @@ console.log( {
 ### Examples
 <details>
 <summary>1. Get item by id</summary>
+
 ```javascript
 client.get('tests', { 
   query: {
@@ -69,6 +70,7 @@ client.get('tests', {
 
 <details>
 <summary>2. Get document count in a collection</summary>
+
 ```javascript
 client.count('tests', {
   query: {
@@ -80,7 +82,7 @@ client.count('tests', {
 
 <details>
 <summary>3. Get items in a collection</summary>
-**Client:**
+
 ```javascript
 client.get('tests', {
   query: {
@@ -94,6 +96,7 @@ client.get('tests', {
 
 <details>
 <summary>4. Create a new document in a collection</summary>
+
 ```javascript
 client.post('tests', {
   firstName: 'Joe'
@@ -103,6 +106,7 @@ client.post('tests', {
 
 <details>
 <summary>5. Replace a document by id</summary>
+
 ```javascript
 client.put('tests', {
   firstName: 'Joe'
@@ -112,6 +116,7 @@ client.put('tests', {
 
 <details>
 <summary>6. Replace multiple documents by query</summary>
+
 ```javascript
 client.put('tests', {
     firstName: 'Zoe',
@@ -127,6 +132,7 @@ client.put('tests', {
 
 <details>
 <summary>7. Partially update multiple documents by id</summary>
+
 ```javascript
 client.patch('tests', {
     timezone: 'GMT'
@@ -140,6 +146,7 @@ client.patch('tests', {
 
 <details>
 <summary>8. Partially update multiple documents by query</summary>
+
 ```javascript
 client.patch('tests', {
     timezone: 'GMT'
@@ -153,6 +160,7 @@ client.patch('tests', {
 
 <details>
 <summary>9. Delete a document by id</summary>
+
 ```javascript
 client.delete('tests', {
   query: {
@@ -165,6 +173,7 @@ client.delete('tests', {
 
 <details>
 <summary>10. Delete multiple documents by query</summary>
+
 ```javascript
 client.delete('tests', {
   query: {
@@ -176,6 +185,7 @@ client.delete('tests', {
 
 <details>
 <summary>11. Lock a collection/document/field combination</summary>
+
 ```javascript
 const lockId = await client.lock('users');
 ```
@@ -183,6 +193,7 @@ const lockId = await client.lock('users');
 
 <details>
 <summary>12. Release a lock</summary>
+
 ```javascript
 const lockId = await client.lock(['users']);
 const newDocument = await client.post('users', {
