@@ -23,5 +23,10 @@
   "devDependencies": {
     "basictap": "^1.1.11",
     "canhazdb": "^3.2.1"
+  },
+  "dependencies": {
+    "final-stream": "^2.0.3",
+    "reconnecting-websocket": "^4.4.0",
+    "ws": "^7.4.2"
   }
 }
