@@ -1,4 +1,4 @@
-# canhazdb client
+# canhazdb-client
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/canhazdb/client)
 [![GitHub package.json version](https://img.shields.io/github/package-json/v/canhazdb/client)](https://github.com/canhazdb/client/blob/master/package.json)
 [![GitHub](https://img.shields.io/github/license/canhazdb/client)](https://github.com/canhazdb/client/blob/master/LICENSE)
@@ -12,8 +12,9 @@ trying to use the client.
 
 ### Client
 
+#### Connecting
 ```javascript
-const client = require('canhazdb/client');
+const client = require('canhazdb-client');
 
 const tls = {
   key: fs.readFileSync('./certs/localhost.privkey.pem'),
@@ -22,11 +23,17 @@ const tls = {
   requestCert: true /* this denys any cert not signed with our ca above */
 };
 const client = createClient('https://localhost:8063', { tls });
+```
 
+#### Making requests
+```javascript
 const document = await client.post('tests', { a: 1 });
 const changed = await client.put('tests', { id: document.id }, { query: { b: 2 } });
 const changedDocument = await client.getOne('tests', { query: { id: document.id } });
+```
 
+#### Using events
+```javascript
 // Capture an event based on regex
 // client.on('.*:/tests/.*', ...)
 // client.on('.*:/tests/uuid-uuid-uuid-uuid', ...)
