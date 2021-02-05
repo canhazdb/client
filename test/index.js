@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const test = require('basictap');
 
-const canhazdb = require('canhazdb').server;
+const canhazdb = require('canhazdb-server');
 const createClient = require('../');
 
 const tls = {
