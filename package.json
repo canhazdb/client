@@ -22,7 +22,8 @@
   "homepage": "https://github.com/canhazdb/client#readme",
   "devDependencies": {
     "basictap": "^1.1.11",
-    "canhazdb": "^3.2.1"
+    "canhazdb-driver-ejdb": "^1.0.0",
+    "canhazdb-server": "^5.1.0"
   },
   "dependencies": {
     "final-stream": "^2.0.3",
