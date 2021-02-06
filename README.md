@@ -187,7 +187,7 @@ client.delete('tests', {
 <summary>11. Lock a collection/document/field combination</summary>
 
 ```javascript
-const lockId = await client.lock('users');
+const lockId = await client.lock(['users']);
 ```
 </details>
 
