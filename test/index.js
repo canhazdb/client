@@ -2,7 +2,6 @@ const fs = require('fs');
 
 const test = require('basictap');
 
-const canhazdb = require('canhazdb-server');
 const createClient = require('../');
 
 const tls = {
@@ -10,6 +9,11 @@ const tls = {
   cert: fs.readFileSync('./certs/localhost.cert.pem'),
   ca: [fs.readFileSync('./certs/ca.cert.pem')]
 };
+
+async function canhazdb (options) {
+  await fs.promises.rmdir('./canhazdata', { recursive: true });
+  return require('canhazdb-server')(options)
+}
 
 test('unknown keys', async t => {
   t.plan(7);
@@ -309,6 +313,7 @@ test('invalid query - getOne', async t => {
       type: 'GET',
       collectionId: 'tests',
       query: { $nin: ['1'] },
+      limit: 1,
       fields: ''
     });
   }
@@ -439,7 +444,7 @@ test('post and notify', async t => {
 });
 
 test('post and notify to multiple', async t => {
-  t.plan(5);
+  t.plan(6);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
   const client = createClient(node.url, { tls });
@@ -475,8 +480,8 @@ test('post and notify to multiple', async t => {
       t.pass('got called twice');
     }
   }
+  client.on('POST:/tests', gotCalled);
   client.on('POST:/tests', handler).then(() => {
     client.post('tests', { a: 1 });
   });
-  client.on('POST:/tests', gotCalled);
 });

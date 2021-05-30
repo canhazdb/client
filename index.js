@@ -102,11 +102,13 @@ function client (rootUrl, clientOptions) {
       options = {};
     }
 
-    const unknownKeys = checkKeys(['query', 'fields', 'limit', 'order'], options);
+    const unknownKeys = checkKeys(['query', 'fields', 'order'], options);
     if (unknownKeys.length > 0) {
       callback(Object.assign(new Error('canhazdb error: unknown keys ' + unknownKeys.join(','))));
       return;
     }
+
+    options.limit = 1;
 
     if (options.query) {
       validateQueryOptions(options.query);
@@ -331,20 +333,25 @@ function client (rootUrl, clientOptions) {
   const rws = clientOptions.disableNotify ? null : new ReconnectingWebSocket(wsUrl, [], wsOptions);
   const onOffAccepts = [];
 
-  function on (path, handler) {
+  async function on (path, handler) {
     if (!rws) {
       throw new Error('notify was disable for this client instance');
     }
 
     lastAcceptId = lastAcceptId + 1;
-    const promise = new Promise(resolve => {
-      onOffAccepts.push([lastAcceptId, resolve]);
-    });
 
-    rws.send(JSON.stringify([lastAcceptId, { [path]: true }]));
+    const existingHandler = handlers.find(item => item[0] === path);
     handlers.push([path, handler]);
 
-    return promise;
+    if (!existingHandler) {
+      const promise = new Promise(resolve => {
+        onOffAccepts.push([lastAcceptId, resolve]);
+      });
+      rws.send(JSON.stringify([lastAcceptId, { [path]: true }]));
+      return promise;
+    }
+
+    return true;
   }
 
   function off (path, handler) {
