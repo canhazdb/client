@@ -1,6 +1,6 @@
 {
   "name": "canhazdb-client",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Talk to a restful api using database like functions.",
   "main": "index.js",
   "directories": {
