@@ -12,7 +12,7 @@ const tls = {
 
 async function canhazdb (options) {
   await fs.promises.rmdir('./canhazdata', { recursive: true });
-  return require('canhazdb-server')(options)
+  return require('canhazdb-server')(options);
 }
 
 test('unknown keys', async t => {

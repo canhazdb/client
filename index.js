@@ -8,6 +8,11 @@ const ReconnectingWebSocket = require('reconnecting-websocket');
 
 const validateQueryOptions = require('./utils/validateQueryOptions');
 
+const {
+  COLLECTION_ID,
+  DOCUMENT
+} = require('./constants');
+
 function createWebSocketClass (options) {
   return class extends WebSocket {
     constructor (url, protocols) {
@@ -146,20 +151,33 @@ function client (rootUrl, clientOptions) {
       return;
     }
 
-    const url = `${rootUrl}/${collectionId}`;
-    https.request(url, {
-      agent: httpsAgent,
-      method: 'POST'
-    }, async function (response) {
-      const data = await finalStream(response).then(JSON.parse);
+    if (!rws) {
+      const url = `${rootUrl}/${collectionId}`;
+      https.request(url, {
+        agent: httpsAgent,
+        method: 'POST'
+      }, async function (response) {
+        const data = await finalStream(response).then(JSON.parse);
 
-      if (response.statusCode >= 400) {
-        callback(Object.assign(new Error('canhazdb error'), { data, statusCode: response.statusCode }));
-        return;
-      }
+        if (response.statusCode >= 400) {
+          callback(Object.assign(new Error('canhazdb error'), { data, statusCode: response.statusCode }));
+          return;
+        }
 
-      callback(null, data);
-    }).end(JSON.stringify(document));
+        callback(null, data);
+      }).end(JSON.stringify(document));
+
+      return;
+    }
+
+    lastAcceptId = lastAcceptId + 1;
+    onOffAccepts.push([lastAcceptId, (error, result) => {
+      callback(error, result[DOCUMENT]);
+    }]);
+    rws.send(JSON.stringify([lastAcceptId, 'POST', {
+      [COLLECTION_ID]: collectionId,
+      [DOCUMENT]: document
+    }]));
   }
 
   function put (collectionId, newDocument, options, callback) {
@@ -347,7 +365,7 @@ function client (rootUrl, clientOptions) {
       const promise = new Promise(resolve => {
         onOffAccepts.push([lastAcceptId, resolve]);
       });
-      rws.send(JSON.stringify([lastAcceptId, { [path]: true }]));
+      rws.send(JSON.stringify([lastAcceptId, 'NOTIFY', path]));
       return promise;
     }
 
@@ -364,7 +382,7 @@ function client (rootUrl, clientOptions) {
       onOffAccepts.push([lastAcceptId, resolve]);
     });
 
-    rws.send(JSON.stringify([lastAcceptId, { [path]: false }]));
+    rws.send(JSON.stringify([lastAcceptId, 'UNNOTIFY', path]));
     const index = handlers.findIndex(item => item[0] === path && item[1] === handler);
 
     if (index === -1) {
@@ -380,7 +398,7 @@ function client (rootUrl, clientOptions) {
     const [type, data] = rawData;
     if (type === 'A') {
       const accepter = onOffAccepts.find(item => item[0] === data);
-      accepter && accepter[1] && accepter[1]();
+      accepter && accepter[1] && accepter[1](null, rawData[2]);
       return;
     }
     handlers.forEach(item => {
