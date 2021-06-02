@@ -283,8 +283,7 @@ test('invalid query - getAll', async t => {
       error: error.data.error,
       type: 'GET',
       collectionId: 'tests',
-      query: { $nin: ['1'] },
-      fields: ''
+      query: { $nin: ['1'] }
     });
   }
 

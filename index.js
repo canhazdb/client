@@ -79,33 +79,54 @@ function client (rootUrl, clientOptions) {
       options = {};
     }
 
-    const unknownKeys = checkKeys(['query', 'fields', 'limit', 'order'], options);
+    const unknownKeys = checkKeys(['query', 'fields', 'order', 'limit'], options);
     if (unknownKeys.length > 0) {
       callback(Object.assign(new Error('canhazdb error: unknown keys ' + unknownKeys.join(','))));
       return;
     }
 
-    if (options.query) {
-      validateQueryOptions(options.query);
+    if (!rws) {
+      if (options.query) {
+        validateQueryOptions(options.query);
+      }
+  
+      const query = querystring.encode({
+        ...options,
+        query: options.query && JSON.stringify(options.query),
+        fields: options.fields && JSON.stringify(options.fields),
+        order: options.order && JSON.stringify(options.order)
+      });
+  
+      const url = `${rootUrl}/${collectionId}?${query}`;
+      https.request(url, { agent: httpsAgent }, async function (response) {
+        const data = await finalStream(response).then(JSON.parse);
+        if (response.statusCode >= 400) {
+          callback(Object.assign(new Error('canhazdb error'), { data, statusCode: response.statusCode }));
+          return;
+        }
+  
+        callback(null, data);
+      }).end();
     }
 
-    const query = querystring.encode({
-      ...options,
-      query: options.query && JSON.stringify(options.query),
-      fields: options.fields && JSON.stringify(options.fields),
-      order: options.order && JSON.stringify(options.order)
-    });
-
-    const url = `${rootUrl}/${collectionId}?${query}`;
-    https.request(url, { agent: httpsAgent }, async function (response) {
-      const data = await finalStream(response).then(JSON.parse);
-      if (response.statusCode >= 400) {
-        callback(Object.assign(new Error('canhazdb error'), { data, statusCode: response.statusCode }));
-        return;
+    lastAcceptId = lastAcceptId + 1;
+    onOffAccepts.push([lastAcceptId, (error, result) => {
+      if (result[STATUS] !== 200) {
+        const error = Object.assign(new Error('canhazdb error'), {
+          data: result[DATA]
+        });
+        callback(error);
+        return
       }
-
-      callback(null, data);
-    }).end();
+      callback(null, result[DOCUMENTS]);
+    }]);
+    rws.send(JSON.stringify([lastAcceptId, 'GET', {
+      [COLLECTION_ID]: collectionId,
+      [QUERY]: options.query,
+      [LIMIT]: options.limit,
+      [FIELDS]: options.fields,
+      [ORDER]: options.order
+    }]));
   }
 
   function getOne (collectionId, options, callback) {
