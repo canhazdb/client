@@ -10,7 +10,14 @@ const validateQueryOptions = require('./utils/validateQueryOptions');
 
 const {
   COLLECTION_ID,
-  DOCUMENT
+  DOCUMENT,
+  DOCUMENTS,
+  STATUS,
+  QUERY,
+  LIMIT,
+  DATA,
+  FIELDS,
+  ORDER
 } = require('./constants');
 
 function createWebSocketClass (options) {
@@ -113,30 +120,50 @@ function client (rootUrl, clientOptions) {
       return;
     }
 
-    options.limit = 1;
+    if (!rws) {
+      options.limit = 1;
 
-    if (options.query) {
-      validateQueryOptions(options.query);
-    }
-
-    const query = querystring.encode({
-      ...options,
-      query: options.query && JSON.stringify(options.query),
-      fields: options.fields && JSON.stringify(options.fields),
-      order: options.order && JSON.stringify(options.order)
-    });
-
-    const url = `${rootUrl}/${collectionId}?${query}`;
-    https.request(url, { agent: httpsAgent }, async function (response) {
-      const data = await finalStream(response).then(JSON.parse);
-
-      if (response.statusCode >= 400) {
-        callback(Object.assign(new Error('canhazdb error'), { data, statusCode: response.statusCode }));
-        return;
+      if (options.query) {
+        validateQueryOptions(options.query);
       }
 
-      callback(null, data[0]);
-    }).end();
+      const query = querystring.encode({
+        ...options,
+        query: options.query && JSON.stringify(options.query),
+        fields: options.fields && JSON.stringify(options.fields),
+        order: options.order && JSON.stringify(options.order)
+      });
+
+      const url = `${rootUrl}/${collectionId}?${query}`;
+      https.request(url, { agent: httpsAgent }, async function (response) {
+        const data = await finalStream(response).then(JSON.parse);
+
+        if (response.statusCode >= 400) {
+          callback(Object.assign(new Error('canhazdb error'), { data, statusCode: response.statusCode }));
+          return;
+        }
+
+        callback(null, data[0]);
+      }).end();
+    }
+
+    lastAcceptId = lastAcceptId + 1;
+    onOffAccepts.push([lastAcceptId, (error, result) => {
+      if (result[STATUS] !== 200) {
+        const error = Object.assign(new Error('canhazdb error'), {
+          data: result[DATA]
+        });
+        callback(error);
+        return
+      }
+      callback(null, result[DOCUMENTS][0]);
+    }]);
+    rws.send(JSON.stringify([lastAcceptId, 'GET', {
+      [COLLECTION_ID]: collectionId,
+      [QUERY]: options.query,
+      [FIELDS]: options.fields,
+      [ORDER]: options.order
+    }]));
   }
 
   function post (collectionId, document, options, callback) {
