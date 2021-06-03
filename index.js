@@ -182,6 +182,7 @@ function client (rootUrl, clientOptions) {
     rws.send(JSON.stringify([lastAcceptId, 'GET', {
       [COLLECTION_ID]: collectionId,
       [QUERY]: options.query,
+      [LIMIT]: 1,
       [FIELDS]: options.fields,
       [ORDER]: options.order
     }]));

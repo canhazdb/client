@@ -311,7 +311,8 @@ test('invalid query - getOne', async t => {
       error: error.data.error,
       type: 'GET',
       collectionId: 'tests',
-      query: { $nin: ['1'] }
+      query: { $nin: ['1'] },
+      limit: 1
     });
   }
 
