@@ -446,8 +446,13 @@ function client (rootUrl, clientOptions) {
     const rawData = JSON.parse(event.data);
     const [type, data] = rawData;
     if (type === 'A') {
-      const accepter = onOffAccepts.find(item => item[0] === data);
+      const accepterIndex = onOffAccepts.findIndex(item => item[0] === data);
+      if (accepterIndex === -1) {
+        return
+      }
+      const accepter = onOffAccepts[accepterIndex];
       accepter && accepter[1] && accepter[1](null, rawData[2]);
+      onOffAccepts.splice(accepterIndex, 1);
       return;
     }
     handlers.forEach(item => {
