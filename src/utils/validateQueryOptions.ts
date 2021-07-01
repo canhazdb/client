@@ -6,4 +6,4 @@ function validateQueryOptions (options) {
   });
 }
 
-module.exports = validateQueryOptions;
+export default validateQueryOptions;
