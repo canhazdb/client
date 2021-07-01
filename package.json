@@ -9,6 +9,7 @@
   },
   "scripts": {
     "prepare": "tsc",
+    "docs:build": "typedoc src",
     "test": "./makeCerts.sh && c8 node test"
   },
   "repository": {
@@ -28,7 +29,8 @@
   "homepage": "https://github.com/canhazdb/client#readme",
   "devDependencies": {
     "basictap": "^1.4.0",
-    "c8": "^7.7.3"
+    "c8": "^7.7.3",
+    "typedoc": "^0.21.2"
   },
   "dependencies": {
     "mql-to-jql": "^1.4.0",

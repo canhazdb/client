@@ -16,8 +16,8 @@ async function canhazdb (options) {
   return canhazdbServer(options);
 }
 
-test.skip('unknown keys', async t => {
-  t.plan(7);
+test('unknown keys', async t => {
+  t.plan(8);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
   const client = await createClient(node.clientConfig);
@@ -52,6 +52,8 @@ test.skip('unknown keys', async t => {
 
   await node.close();
   await client.close();
+
+  t.pass();
 });
 
 test.skip('lock and unlock', async t => {
@@ -346,6 +348,9 @@ test('invalid query - getOne', async t => {
       }
     });
   } catch (error) {
+    await node.close();
+    await client.close();
+
     t.equal(error.message, 'canhazdb client: key "$nin" has an invalid value of ["1"]. must be ["$eq","$ne","$gt","$gte","$lt","$lte","$exists","$null","$in","$nin"]');
     t.equal(error.statusCode, 'STATUS_BAD_REQUEST');
     t.deepEqual(error.request, {
@@ -354,13 +359,10 @@ test('invalid query - getOne', async t => {
       }
     });
   }
-
-  await node.close();
-  await client.close();
 });
 
-test.skip('invalid query - put', async t => {
-  t.plan(2);
+test('invalid query - put', async t => {
+  t.plan(3);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
   const client = await createClient(node.clientConfig);
@@ -374,21 +376,21 @@ test.skip('invalid query - put', async t => {
       }
     });
   } catch (error) {
-    t.equal(error.message, 'canhazdb error');
-    t.deepEqual(error.data, {
-      error: error.data.error,
-      type: 'PUT',
-      collectionId: 'tests',
-      query: { $nin: ['1'] }
+    await node.close();
+    await client.close();
+
+    t.equal(error.message, 'canhazdb client: key "$nin" has an invalid value of ["1"]. must be ["$eq","$ne","$gt","$gte","$lt","$lte","$exists","$null","$in","$nin"]');
+    t.equal(error.statusCode, 'STATUS_BAD_REQUEST');
+    t.deepEqual(error.request, {
+      query: {
+        $nin: ['1']
+      }
     });
   }
-
-  await node.close();
-  await client.close();
 });
 
-test.skip('invalid query - patch', async t => {
-  t.plan(2);
+test('invalid query - patch', async t => {
+  t.plan(3);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
   const client = await createClient(node.clientConfig);
@@ -402,21 +404,21 @@ test.skip('invalid query - patch', async t => {
       }
     });
   } catch (error) {
-    t.equal(error.message, 'canhazdb error');
-    t.deepEqual(error.data, {
-      error: error.data.error,
-      type: 'PATCH',
-      collectionId: 'tests',
-      query: { $nin: ['1'] }
+    await node.close();
+    await client.close();
+
+    t.equal(error.message, 'canhazdb client: key "$nin" has an invalid value of ["1"]. must be ["$eq","$ne","$gt","$gte","$lt","$lte","$exists","$null","$in","$nin"]');
+    t.equal(error.statusCode, 'STATUS_BAD_REQUEST');
+    t.deepEqual(error.request, {
+      query: {
+        $nin: ['1']
+      }
     });
   }
-
-  await node.close();
-  await client.close();
 });
 
-test.skip('invalid query - delete', async t => {
-  t.plan(2);
+test('invalid query - delete', async t => {
+  t.plan(3);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
   const client = await createClient(node.clientConfig);
@@ -430,17 +432,17 @@ test.skip('invalid query - delete', async t => {
       }
     });
   } catch (error) {
-    t.equal(error.message, 'canhazdb error');
-    t.deepEqual(error.data, {
-      error: error.data.error,
-      type: 'DELETE',
-      collectionId: 'tests',
-      query: { $nin: ['1'] }
+    await node.close();
+    await client.close();
+
+    t.equal(error.message, 'canhazdb client: key "$nin" has an invalid value of ["1"]. must be ["$eq","$ne","$gt","$gte","$lt","$lte","$exists","$null","$in","$nin"]');
+    t.equal(error.statusCode, 'STATUS_BAD_REQUEST');
+    t.deepEqual(error.request, {
+      query: {
+        $nin: ['1']
+      }
     });
   }
-
-  await node.close();
-  await client.close();
 });
 
 test.skip('post and notify', async t => {
