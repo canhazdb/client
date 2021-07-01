@@ -1,3 +1,5 @@
 canhazdata
 certs
 node_modules
+coverage
+lib

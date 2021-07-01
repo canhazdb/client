@@ -1,5 +1,6 @@
-const fs = require('fs');
-const https = require('https');
+import fs from 'fs';
+import https from 'https';
+import axios from 'axios';
 
 const httpsAgent = new https.Agent({
   key: fs.readFileSync('./certs/localhost.privkey.pem'),
@@ -7,5 +8,5 @@ const httpsAgent = new https.Agent({
   ca: [fs.readFileSync('./certs/ca.cert.pem')]
 });
 
-module.exports = require('axios')
+export default axios
   .create({ httpsAgent, validateStatus: () => true });
