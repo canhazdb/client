@@ -207,4 +207,4 @@ await client.unlock(lockId);
 </details>
 
 ## License
-This project is licensed under the terms of the AGPL-3.0 license.
+This project is licensed under the terms of the MIT license.

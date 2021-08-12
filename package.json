@@ -22,7 +22,7 @@
     "email": "me@markwylde.com",
     "url": "https://github.com/markwylde"
   },
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/canhazdb/client/issues"
   },
