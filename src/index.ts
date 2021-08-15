@@ -324,6 +324,56 @@ export function lock (connection) {
   }
 }
 
+export function on (connection, notifiers : Object) {
+  return async (notifyPath : string, handler : Function) => {
+    if (!notifiers[notifyPath]) {
+      notifiers[notifyPath] = [];
+      notifiers[notifyPath].regex = notifiers[notifyPath].regex || new RegExp(notifyPath);
+    }
+
+    if (notifiers[notifyPath].length === 0) {
+      const response = await connection.send(c.NOTIFY_ON, {
+        [c.NOTIFY_PATH]: notifyPath
+      });
+
+      if (response.command !== c.STATUS_OK) {
+        const data = response.json()
+        throw Object.assign(new Error('canhazdb client: ' + data[c.ERROR]), {
+          statusCode: c[response.command],
+          request: { notifyPath },
+          getResponse: () => response
+        });
+      }
+    }
+
+    notifiers[notifyPath].push(handler);
+  }
+}
+
+export function off (connection, notifiers : Object) {
+  return async (notifyPath : string, handler : Function) => {
+    notifiers[notifyPath] = notifiers[notifyPath] || [];
+
+    notifiers[notifyPath] = notifiers[notifyPath]
+      .filter(savedHandler =>  savedHandler !== handler);
+
+    if (notifiers[notifyPath].length === 0) {
+      const response = await connection.send(c.NOTIFY_OFF, {
+        [c.NOTIFY_PATH]: notifyPath
+      });
+
+      if (response.command !== c.STATUS_OK) {
+        const data = response.json()
+        throw Object.assign(new Error('canhazdb client: ' + data[c.ERROR]), {
+          statusCode: c[response.command],
+          request: { notifyPath },
+          getResponse: () => response
+        });
+      }
+    }
+  }
+}
+
 export interface ClientOptions {
   host: string,
   port: number,
@@ -338,11 +388,33 @@ export interface ClientOptions {
  */
 export async function createClient (options: ClientOptions) {
   const connection = tcpocket.createClient(options);
+
+  const notifiers = {};
+
   await connection.waitUntilConnected();
 
   function close () {
     connection.close();
   }
+
+  connection.on('message', data => {
+    const notifyPath = data.json()[c.DATA];
+
+    const filteredNotifiersKeys = Object
+      .keys(notifiers)
+      .filter(
+        notifierKey => notifyPath.match(notifiers[notifierKey].regex)
+      );
+
+    filteredNotifiersKeys.forEach(notifierKey => {
+      notifiers[notifierKey]
+        .forEach(handler => {
+          const [method, ...rest] = notifyPath.split(':');
+          const [, collectionId, documentId] = rest.join(':').split('/');
+          handler(notifyPath, method, collectionId, documentId, notifierKey);
+        });
+    });
+  });
 
   return {
     connection,
@@ -355,6 +427,8 @@ export async function createClient (options: ClientOptions) {
     patch: patch(connection),
     delete: del(connection),
     lock: lock(connection),
+    on: on(connection, notifiers),
+    off: off(connection, notifiers),
 
     close
   };

@@ -16,6 +16,8 @@ async function canhazdb (options) {
   return canhazdbServer(options);
 }
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 test('unknown keys', async t => {
   t.plan(8);
 
@@ -445,8 +447,8 @@ test('invalid query - delete', async t => {
   }
 });
 
-test.skip('post and notify', async t => {
-  t.plan(5);
+test('post and notify', async t => {
+  t.plan(6);
 
   const node = await canhazdb({ host: 'localhost', port: 11505, queryPort: 11506, tls, single: true });
   const client = await createClient(node.clientConfig);
@@ -454,7 +456,7 @@ test.skip('post and notify', async t => {
   let alreadyHandled = false;
 
   return new Promise((resolve) => {
-    async function handler (path, collectionId, resourceId, pattern) {
+    async function handler (path, method, collectionId, resourceId, pattern) {
       if (alreadyHandled) {
         t.fail('handler should only be called once');
       }
@@ -468,6 +470,7 @@ test.skip('post and notify', async t => {
       });
 
       t.equal(pattern, 'POST:/tests');
+      t.equal(method, 'POST');
       t.ok(path.startsWith('POST:/tests/'), 'path starts with /tests/');
       t.equal(path.length, 48);
       t.equal(collectionId, 'tests');
@@ -482,15 +485,15 @@ test.skip('post and notify', async t => {
   });
 });
 
-test.skip('post and notify to multiple', async t => {
-  t.plan(6);
+test('post and notify to multiple', async t => {
+  t.plan(7);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
   const client = await createClient(node.clientConfig);
 
   let alreadyHandled = false;
 
-  async function handler (path, collectionId, resourceId, pattern) {
+  async function handler (path, method, collectionId, resourceId, pattern) {
     if (alreadyHandled) {
       t.fail('handler should only be called once');
     }
@@ -502,6 +505,7 @@ test.skip('post and notify to multiple', async t => {
     });
 
     t.equal(pattern, 'POST:/tests');
+    t.equal(method, 'POST');
     t.ok(path.startsWith('POST:/tests/'), 'path starts with /tests/');
     t.equal(path.length, 48);
     t.equal(collectionId, 'tests');
@@ -514,8 +518,9 @@ test.skip('post and notify to multiple', async t => {
   async function gotCalled () {
     calls = calls + 1;
     if (calls === 2) {
-      await node.close();
+      await sleep(100);
       await client.close();
+      await node.close();
       t.pass('got called twice');
     }
   }

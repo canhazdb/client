@@ -41,14 +41,15 @@ const changedDocument = await client.getOne('tests', { query: { id: document.id 
 // client.on('DELETE:/tests/.*', ...)
 // client.on('(PUT|PATCH):/tests/uuid-uuid-uuid-uuid', ...)
 
-client.on('POST:/tests/.*', (path, collectionId, resourceId, pattern) => {
+client.on('POST:/tests/.*', (path, method, collectionId, resourceId, pattern) => {
   console.log(path) // === 'POST:/tests/uuid-uuid-uuid-uuid'
+  console.log(method) // === 'POST'
   console.log(collectionId) // === 'tests'
   console.log(resourceId) // === 'uuid-uuid-uuid-uuid'
   console.log(pattern) // === 'POST:/tests/.*'
 })
 
-console.log( {
+console.log({
   document, /* { a: 1 } */
   changed, /* { changes: 1 } */
   changedDocument, /* { b: 2 } */
