@@ -288,21 +288,10 @@ export function del (connection) {
   }
 }
 
-export interface LockOptions {
-  query?: Object,
-  limit?: Number,
-  order?: String,
-  lockId?: String,
-  lockStrategy?: String
-}
 export function lock (connection) {
-  return async (keys, options: LockOptions = {}) =>{
+  return async (keys) =>{
     if (!Array.isArray(keys)) {
       throw Object.assign(new Error('canhazdb error: keys must be array but got ' + keys.toString()));
-    }
-
-    if (options.query) {
-      validateQueryOptions(options.query);
     }
 
     const response = await connection.send(c.LOCK, {
@@ -313,14 +302,33 @@ export function lock (connection) {
       const data = response.json()
       throw Object.assign(new Error('canhazdb client: ' + data[c.ERROR]), {
         statusCode: c[response.command],
-        request: options,
         getResponse: () => response
       });
     }
 
-    return {
-      lockId: response.json()[c.LOCK_ID]
-    };
+    return response.json()[c.LOCK_ID];
+  }
+}
+
+export function unlock (connection) {
+  return async (lockId) =>{
+    if (!lockId) {
+      throw Object.assign(new Error('canhazdb error: unlock must be passed the lockId'));
+    }
+
+    const response = await connection.send(c.UNLOCK, {
+      [c.LOCK_ID]: lockId
+    });
+
+    if (response.command !== c.STATUS_OK) {
+      const data = response.json()
+      throw Object.assign(new Error('canhazdb client: ' + data[c.ERROR]), {
+        statusCode: c[response.command],
+        getResponse: () => response
+      });
+    }
+
+    return response.json()[c.LOCK_ID];
   }
 }
 
@@ -427,6 +435,7 @@ export async function createClient (options: ClientOptions) {
     patch: patch(connection),
     delete: del(connection),
     lock: lock(connection),
+    unlock: unlock(connection),
     on: on(connection, notifiers),
     off: off(connection, notifiers),
 

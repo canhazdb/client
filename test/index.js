@@ -58,7 +58,7 @@ test('unknown keys', async t => {
   t.pass();
 });
 
-test.skip('lock and unlock', async t => {
+test('lock and unlock', async t => {
   t.plan(5);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
