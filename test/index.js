@@ -24,31 +24,31 @@ test('unknown keys', async t => {
   const node = await canhazdb({ host: 'localhost', tls, single: true });
   const client = await createClient(node.clientConfig);
 
-  client.getOne('tests', { wrongKey: 1 }).catch(error => {
+  await client.getOne('tests', { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.getAll('tests', { wrongKey: 1 }).catch(error => {
+  await client.getAll('tests', { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.post('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
+  await client.post('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.put('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
+  await client.put('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.patch('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
+  await client.patch('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.delete('tests', { wrongKey: 1 }).catch(error => {
+  await client.delete('tests', { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.lock('not array').catch(error => {
+  await client.lock('not array').catch(error => {
     t.equal(error.message, 'canhazdb error: keys must be array but got not array');
   });
 
@@ -301,8 +301,8 @@ test('serialise undefined', async t => {
     t.equal(error.message, 'canhazdb:client can not serialise an object with undefined');
   }
 
-  await node.close();
   await client.close();
+  await node.close();
 
   t.pass('sockets closed');
 });
