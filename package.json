@@ -28,13 +28,14 @@
   },
   "homepage": "https://github.com/canhazdb/client#readme",
   "devDependencies": {
-    "basictap": "^1.4.0",
-    "c8": "^7.7.3",
-    "typedoc": "^0.21.2",
-    "typescript": "^4.3.5"
+    "@types/util.promisify": "^1.0.4",
+    "basictap": "^2.2.1",
+    "c8": "^7.9.0",
+    "typedoc": "^0.22.3",
+    "typescript": "^4.4.3"
   },
   "dependencies": {
     "mql-to-jql": "^1.4.0",
-    "tcpocket": "^7.3.2"
+    "tcpocket": "^7.4.0"
   }
 }

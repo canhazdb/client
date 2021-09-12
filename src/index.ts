@@ -4,6 +4,8 @@ import validateQueryOptions from './utils/validateQueryOptions.js';
 
 import { CommandCodes as c } from './constants.js';
 
+import waitUntil from './utils/waitUntil.js';
+
 function checkKeys (allowedKeys, object) {
   return Object
     .keys(object)
@@ -399,6 +401,8 @@ export async function createClient (options: ClientOptions) {
 
   const notifiers = {};
 
+  let ready;
+
   await connection.waitUntilConnected();
 
   function close () {
@@ -406,23 +410,32 @@ export async function createClient (options: ClientOptions) {
   }
 
   connection.on('message', data => {
-    const notifyPath = data.json()[c.DATA];
+    if (data.command === c.READY) {
+      ready = true;
+      return;
+    }
 
-    const filteredNotifiersKeys = Object
-      .keys(notifiers)
-      .filter(
-        notifierKey => notifyPath.match(notifiers[notifierKey].regex)
-      );
+    if (data.command === c.NOTIFY) {
+      const notifyPath = data.json()[c.DATA];
 
-    filteredNotifiersKeys.forEach(notifierKey => {
-      notifiers[notifierKey]
-        .forEach(handler => {
-          const [method, ...rest] = notifyPath.split(':');
-          const [, collectionId, documentId] = rest.join(':').split('/');
-          handler(notifyPath, method, collectionId, documentId, notifierKey);
-        });
-    });
+      const filteredNotifiersKeys = Object
+        .keys(notifiers)
+        .filter(
+          notifierKey => notifyPath.match(notifiers[notifierKey].regex)
+        );
+
+      filteredNotifiersKeys.forEach(notifierKey => {
+        notifiers[notifierKey]
+          .forEach(handler => {
+            const [method, ...rest] = notifyPath.split(':');
+            const [, collectionId, documentId] = rest.join(':').split('/');
+            handler(notifyPath, method, collectionId, documentId, notifierKey);
+          });
+      });
+    }
   });
+
+  await waitUntil(() => ready);
 
   return {
     connection,

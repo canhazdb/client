@@ -219,7 +219,7 @@ test('post, put and get', async t => {
   await client.close();
 
   t.deepEqual(document.a, 2);
-  t.deepEqual(putted.changes, 1);
+  t.deepEqual(putted.changes.length, 1);
   t.ok(reget.id);
   t.ok(reget.b);
   t.deepEqual(reget.b, 3);
@@ -240,7 +240,7 @@ test('post, patch and get', async t => {
   await client.close();
 
   t.deepEqual(document.a, 2);
-  t.deepEqual(patched.changes, 1);
+  t.deepEqual(patched.changes.length, 1);
   t.ok(reget.id);
   t.ok(reget.b);
   t.deepEqual(reget.a, 2);
@@ -261,7 +261,7 @@ test('post, delete and get', async t => {
   await client.close();
 
   t.deepEqual(document.a, 1);
-  t.deepEqual(deletion.changes, 1);
+  t.deepEqual(deletion.changes.length, 1);
   t.notOk(reget);
 });
 
