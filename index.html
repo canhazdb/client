@@ -1,289 +1,131 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>canhazdb-client</title>
-	<meta name="description" content="Documentation for canhazdb-client">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">canhazdb-client</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>canhazdb-client</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#canhazdb-client" id="canhazdb-client" style="color: inherit; text-decoration: none;">
-					<h1>canhazdb-client</h1>
-				</a>
-				<p><img src="https://img.shields.io/github/languages/code-size/canhazdb/client" alt="GitHub code size in bytes">
-					<a href="https://github.com/canhazdb/client/blob/master/package.json"><img src="https://img.shields.io/github/package-json/v/canhazdb/client" alt="GitHub package.json version"></a>
-					<a href="https://github.com/canhazdb/client/blob/master/LICENSE"><img src="https://img.shields.io/github/license/canhazdb/client" alt="GitHub"></a>
-				<a href="https://github.com/standard/semistandard"><img src="https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg" alt="js-semistandard-style"></a></p>
-				<p>A client to simplify making rest api calls by using database like functions.</p>
-				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
-					<h2>Getting Started</h2>
-				</a>
-				<p>You should <a href="https://github.com/canhazdb/server#server-via-the-cli">create a server</a> before
-				trying to use the client.</p>
-				<a href="#client" id="client" style="color: inherit; text-decoration: none;">
-					<h3>Client</h3>
-				</a>
-				<a href="#connecting" id="connecting" style="color: inherit; text-decoration: none;">
-					<h4>Connecting</h4>
-				</a>
-				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;canhazdb-client&#039;</span><span style="color: #000000">);</span>
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>canhazdb-client</title><meta name="description" content="Documentation for canhazdb-client"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">canhazdb-client</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>canhazdb-client</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#canhazdb-client" id="canhazdb-client" style="color: inherit; text-decoration: none;">
+  <h1>canhazdb-client</h1>
+</a>
+<p><img src="https://img.shields.io/github/languages/code-size/canhazdb/client" alt="GitHub code size in bytes">
+<a href="https://github.com/canhazdb/client/blob/master/package.json"><img src="https://img.shields.io/github/package-json/v/canhazdb/client" alt="GitHub package.json version"></a>
+<a href="https://github.com/canhazdb/client/blob/master/LICENSE"><img src="https://img.shields.io/github/license/canhazdb/client" alt="GitHub"></a>
+<a href="https://github.com/standard/semistandard"><img src="https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg" alt="js-semistandard-style"></a></p>
+<p>A client to simplify making rest api calls by using database like functions.</p>
 
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">tls</span><span style="color: #000000"> = {</span>
-<span style="color: #000000">  </span><span style="color: #001080">key:</span><span style="color: #000000"> </span><span style="color: #001080">fs</span><span style="color: #000000">.</span><span style="color: #795E26">readFileSync</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;./certs/localhost.privkey.pem&#039;</span><span style="color: #000000">),</span>
-<span style="color: #000000">  </span><span style="color: #001080">cert:</span><span style="color: #000000"> </span><span style="color: #001080">fs</span><span style="color: #000000">.</span><span style="color: #795E26">readFileSync</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;./certs/localhost.cert.pem&#039;</span><span style="color: #000000">),</span>
-<span style="color: #000000">  </span><span style="color: #001080">ca:</span><span style="color: #000000"> [ </span><span style="color: #001080">fs</span><span style="color: #000000">.</span><span style="color: #795E26">readFileSync</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;./certs/ca.cert.pem&#039;</span><span style="color: #000000">) ],</span>
-<span style="color: #000000">  </span><span style="color: #001080">requestCert:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> </span><span style="color: #008000">/* this denys any cert not signed with our ca above */</span>
-<span style="color: #000000">};</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #795E26">createClient</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;https://localhost:8063&#039;</span><span style="color: #000000">, { </span><span style="color: #001080">tls</span><span style="color: #000000"> });</span>
-</code></pre>
-				<a href="#making-requests" id="making-requests" style="color: inherit; text-decoration: none;">
-					<h4>Making requests</h4>
-				</a>
-				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">document</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">post</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, { </span><span style="color: #001080">a:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000"> });</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">changed</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">put</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, { </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #001080">document</span><span style="color: #000000">.</span><span style="color: #001080">id</span><span style="color: #000000"> }, { </span><span style="color: #001080">query:</span><span style="color: #000000"> { </span><span style="color: #001080">b:</span><span style="color: #000000"> </span><span style="color: #098658">2</span><span style="color: #000000"> } });</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">changedDocument</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">getOne</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, { </span><span style="color: #001080">query:</span><span style="color: #000000"> { </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #001080">document</span><span style="color: #000000">.</span><span style="color: #001080">id</span><span style="color: #000000"> } });</span>
-</code></pre>
-				<a href="#using-events" id="using-events" style="color: inherit; text-decoration: none;">
-					<h4>Using events</h4>
-				</a>
-				<pre><code class="language-javascript"><span style="color: #008000">// Capture an event based on regex</span>
-<span style="color: #008000">// client.on(&#039;.*:/tests/.*&#039;, ...)</span>
-<span style="color: #008000">// client.on(&#039;.*:/tests/uuid-uuid-uuid-uuid&#039;, ...)</span>
-<span style="color: #008000">// client.on(&#039;POST:/tests&#039;, ...)</span>
-<span style="color: #008000">// client.on(&#039;DELETE:/tests/.*&#039;, ...)</span>
-<span style="color: #008000">// client.on(&#039;(PUT|PATCH):/tests/uuid-uuid-uuid-uuid&#039;, ...)</span>
+<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+  <h2>Getting Started</h2>
+</a>
+<p>You should <a href="https://github.com/canhazdb/server#server-via-the-cli">create a server</a> before
+trying to use the client.</p>
 
-<span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;POST:/tests/.*&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">path</span><span style="color: #000000">, </span><span style="color: #001080">method</span><span style="color: #000000">, </span><span style="color: #001080">collectionId</span><span style="color: #000000">, </span><span style="color: #001080">resourceId</span><span style="color: #000000">, </span><span style="color: #001080">pattern</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">path</span><span style="color: #000000">) </span><span style="color: #008000">// === &#039;POST:/tests/uuid-uuid-uuid-uuid&#039;</span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">method</span><span style="color: #000000">) </span><span style="color: #008000">// === &#039;POST&#039;</span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">collectionId</span><span style="color: #000000">) </span><span style="color: #008000">// === &#039;tests&#039;</span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">resourceId</span><span style="color: #000000">) </span><span style="color: #008000">// === &#039;uuid-uuid-uuid-uuid&#039;</span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">pattern</span><span style="color: #000000">) </span><span style="color: #008000">// === &#039;POST:/tests/.*&#039;</span>
-<span style="color: #000000">})</span>
+<a href="#client" id="client" style="color: inherit; text-decoration: none;">
+  <h3>Client</h3>
+</a>
 
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">document</span><span style="color: #000000">, </span><span style="color: #008000">/* { a: 1 } */</span>
-<span style="color: #000000">  </span><span style="color: #001080">changed</span><span style="color: #000000">, </span><span style="color: #008000">/* { changes: 1 } */</span>
-<span style="color: #000000">  </span><span style="color: #001080">changedDocument</span><span style="color: #000000">, </span><span style="color: #008000">/* { b: 2 } */</span>
-<span style="color: #000000">})</span>
+<a href="#connecting" id="connecting" style="color: inherit; text-decoration: none;">
+  <h4>Connecting</h4>
+</a>
+<pre><code class="language-javascript"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">client</span><span class="hl-1"> = </span><span class="hl-3">require</span><span class="hl-1">(</span><span class="hl-4">&#39;canhazdb-client&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">tls</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-5">key:</span><span class="hl-1"> </span><span class="hl-5">fs</span><span class="hl-1">.</span><span class="hl-3">readFileSync</span><span class="hl-1">(</span><span class="hl-4">&#39;./certs/localhost.privkey.pem&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">  </span><span class="hl-5">cert:</span><span class="hl-1"> </span><span class="hl-5">fs</span><span class="hl-1">.</span><span class="hl-3">readFileSync</span><span class="hl-1">(</span><span class="hl-4">&#39;./certs/localhost.cert.pem&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">  </span><span class="hl-5">ca:</span><span class="hl-1"> [ </span><span class="hl-5">fs</span><span class="hl-1">.</span><span class="hl-3">readFileSync</span><span class="hl-1">(</span><span class="hl-4">&#39;./certs/ca.cert.pem&#39;</span><span class="hl-1">) ],</span><br/><span class="hl-1">  </span><span class="hl-5">requestCert:</span><span class="hl-1"> </span><span class="hl-0">true</span><span class="hl-1"> </span><span class="hl-6">/* this denys any cert not signed with our ca above */</span><br/><span class="hl-1">};</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">client</span><span class="hl-1"> = </span><span class="hl-3">createClient</span><span class="hl-1">(</span><span class="hl-4">&#39;https://localhost:8063&#39;</span><span class="hl-1">, { </span><span class="hl-5">tls</span><span class="hl-1"> });</span>
 </code></pre>
-				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
-					<h3>Examples</h3>
-				</a>
-				<details>
-					<summary>1. Get item by id</summary>
-					<pre><code class="language-javascript"><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, { </span>
-<span style="color: #000000">  </span><span style="color: #001080">query:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;example-uuid-paramater&#039;</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">});</span>
+
+<a href="#making-requests" id="making-requests" style="color: inherit; text-decoration: none;">
+  <h4>Making requests</h4>
+</a>
+<pre><code class="language-javascript"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">document</span><span class="hl-1"> = </span><span class="hl-7">await</span><span class="hl-1"> </span><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">post</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, { </span><span class="hl-5">a:</span><span class="hl-1"> </span><span class="hl-8">1</span><span class="hl-1"> });</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">changed</span><span class="hl-1"> = </span><span class="hl-7">await</span><span class="hl-1"> </span><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">put</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, { </span><span class="hl-5">id:</span><span class="hl-1"> </span><span class="hl-5">document</span><span class="hl-1">.</span><span class="hl-5">id</span><span class="hl-1"> }, { </span><span class="hl-5">query:</span><span class="hl-1"> { </span><span class="hl-5">b:</span><span class="hl-1"> </span><span class="hl-8">2</span><span class="hl-1"> } });</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">changedDocument</span><span class="hl-1"> = </span><span class="hl-7">await</span><span class="hl-1"> </span><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">getOne</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, { </span><span class="hl-5">query:</span><span class="hl-1"> { </span><span class="hl-5">id:</span><span class="hl-1"> </span><span class="hl-5">document</span><span class="hl-1">.</span><span class="hl-5">id</span><span class="hl-1"> } });</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>2. Get document count in a collection</summary>
-					<pre><code class="language-javascript"><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">count</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">query:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">firstName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Joe&#039;</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">});</span>
+
+<a href="#using-events" id="using-events" style="color: inherit; text-decoration: none;">
+  <h4>Using events</h4>
+</a>
+<pre><code class="language-javascript"><span class="hl-6">// Capture an event based on regex</span><br/><span class="hl-6">// client.on(&#39;.*:/tests/.*&#39;, ...)</span><br/><span class="hl-6">// client.on(&#39;.*:/tests/uuid-uuid-uuid-uuid&#39;, ...)</span><br/><span class="hl-6">// client.on(&#39;POST:/tests&#39;, ...)</span><br/><span class="hl-6">// client.on(&#39;DELETE:/tests/.*&#39;, ...)</span><br/><span class="hl-6">// client.on(&#39;(PUT|PATCH):/tests/uuid-uuid-uuid-uuid&#39;, ...)</span><br/><br/><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">on</span><span class="hl-1">(</span><span class="hl-4">&#39;POST:/tests/.*&#39;</span><span class="hl-1">, (</span><span class="hl-5">path</span><span class="hl-1">, </span><span class="hl-5">method</span><span class="hl-1">, </span><span class="hl-5">collectionId</span><span class="hl-1">, </span><span class="hl-5">resourceId</span><span class="hl-1">, </span><span class="hl-5">pattern</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-3">log</span><span class="hl-1">(</span><span class="hl-5">path</span><span class="hl-1">) </span><span class="hl-6">// === &#39;POST:/tests/uuid-uuid-uuid-uuid&#39;</span><br/><span class="hl-1">  </span><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-3">log</span><span class="hl-1">(</span><span class="hl-5">method</span><span class="hl-1">) </span><span class="hl-6">// === &#39;POST&#39;</span><br/><span class="hl-1">  </span><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-3">log</span><span class="hl-1">(</span><span class="hl-5">collectionId</span><span class="hl-1">) </span><span class="hl-6">// === &#39;tests&#39;</span><br/><span class="hl-1">  </span><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-3">log</span><span class="hl-1">(</span><span class="hl-5">resourceId</span><span class="hl-1">) </span><span class="hl-6">// === &#39;uuid-uuid-uuid-uuid&#39;</span><br/><span class="hl-1">  </span><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-3">log</span><span class="hl-1">(</span><span class="hl-5">pattern</span><span class="hl-1">) </span><span class="hl-6">// === &#39;POST:/tests/.*&#39;</span><br/><span class="hl-1">})</span><br/><br/><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-3">log</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-5">document</span><span class="hl-1">, </span><span class="hl-6">/* { a: 1 } */</span><br/><span class="hl-1">  </span><span class="hl-5">changed</span><span class="hl-1">, </span><span class="hl-6">/* { changes: 1 } */</span><br/><span class="hl-1">  </span><span class="hl-5">changedDocument</span><span class="hl-1">, </span><span class="hl-6">/* { b: 2 } */</span><br/><span class="hl-1">})</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>3. Get items in a collection</summary>
-					<pre><code class="language-javascript"><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">query:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">firstName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Joe&#039;</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #001080">limit:</span><span style="color: #000000"> </span><span style="color: #098658">10</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">order:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;desc(firstName)&#039;</span>
-<span style="color: #000000">});</span>
+
+<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+  <h3>Examples</h3>
+</a>
+<details>
+<summary>1. Get item by id</summary>
+
+<pre><code class="language-javascript"><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">get</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, { </span><br/><span class="hl-1">  </span><span class="hl-5">query:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">id:</span><span class="hl-1"> </span><span class="hl-4">&#39;example-uuid-paramater&#39;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">});</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>4. Create a new document in a collection</summary>
-					<pre><code class="language-javascript"><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">post</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">firstName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Joe&#039;</span>
-<span style="color: #000000">});</span>
+</details>
+
+<details>
+<summary>2. Get document count in a collection</summary>
+
+<pre><code class="language-javascript"><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">count</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-5">query:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">firstName:</span><span class="hl-1"> </span><span class="hl-4">&#39;Joe&#39;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">});</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>5. Replace a document by id</summary>
-					<pre><code class="language-javascript"><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">put</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">firstName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Joe&#039;</span>
-<span style="color: #000000">});</span>
+</details>
+
+<details>
+<summary>3. Get items in a collection</summary>
+
+<pre><code class="language-javascript"><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">get</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-5">query:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">firstName:</span><span class="hl-1"> </span><span class="hl-4">&#39;Joe&#39;</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-5">limit:</span><span class="hl-1"> </span><span class="hl-8">10</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-5">order:</span><span class="hl-1"> </span><span class="hl-4">&#39;desc(firstName)&#39;</span><br/><span class="hl-1">});</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>6. Replace multiple documents by query</summary>
-					<pre><code class="language-javascript"><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">put</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">    </span><span style="color: #001080">firstName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Zoe&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">location:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;GB&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">timezone:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;GMT&#039;</span>
-<span style="color: #000000">}, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">query:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">location:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;GB&#039;</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">});</span>
+</details>
+
+<details>
+<summary>4. Create a new document in a collection</summary>
+
+<pre><code class="language-javascript"><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">post</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-5">firstName:</span><span class="hl-1"> </span><span class="hl-4">&#39;Joe&#39;</span><br/><span class="hl-1">});</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>7. Partially update multiple documents by id</summary>
-					<pre><code class="language-javascript"><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">patch</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">    </span><span style="color: #001080">timezone:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;GMT&#039;</span>
-<span style="color: #000000">}, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">query:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">location:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;GB&#039;</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">});</span>
+</details>
+
+<details>
+<summary>5. Replace a document by id</summary>
+
+<pre><code class="language-javascript"><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">put</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-5">firstName:</span><span class="hl-1"> </span><span class="hl-4">&#39;Joe&#39;</span><br/><span class="hl-1">});</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>8. Partially update multiple documents by query</summary>
-					<pre><code class="language-javascript"><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">patch</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">    </span><span style="color: #001080">timezone:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;GMT&#039;</span>
-<span style="color: #000000">}, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">query:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">location:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;GB&#039;</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">});</span>
+</details>
+
+<details>
+<summary>6. Replace multiple documents by query</summary>
+
+<pre><code class="language-javascript"><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">put</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">    </span><span class="hl-5">firstName:</span><span class="hl-1"> </span><span class="hl-4">&#39;Zoe&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">location:</span><span class="hl-1"> </span><span class="hl-4">&#39;GB&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">timezone:</span><span class="hl-1"> </span><span class="hl-4">&#39;GMT&#39;</span><br/><span class="hl-1">}, {</span><br/><span class="hl-1">  </span><span class="hl-5">query:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">location:</span><span class="hl-1"> </span><span class="hl-4">&#39;GB&#39;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">});</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>9. Delete a document by id</summary>
-					<pre><code class="language-javascript"><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">delete</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">query:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;example-uuid-paramater&#039;</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">});</span>
+</details>
+
+<details>
+<summary>7. Partially update multiple documents by id</summary>
+
+<pre><code class="language-javascript"><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">patch</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">    </span><span class="hl-5">timezone:</span><span class="hl-1"> </span><span class="hl-4">&#39;GMT&#39;</span><br/><span class="hl-1">}, {</span><br/><span class="hl-1">  </span><span class="hl-5">query:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">location:</span><span class="hl-1"> </span><span class="hl-4">&#39;GB&#39;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">});</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>10. Delete multiple documents by query</summary>
-					<pre><code class="language-javascript"><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">delete</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;tests&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">query:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">location:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;GB&#039;</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">});</span>
+</details>
+
+<details>
+<summary>8. Partially update multiple documents by query</summary>
+
+<pre><code class="language-javascript"><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">patch</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">    </span><span class="hl-5">timezone:</span><span class="hl-1"> </span><span class="hl-4">&#39;GMT&#39;</span><br/><span class="hl-1">}, {</span><br/><span class="hl-1">  </span><span class="hl-5">query:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">location:</span><span class="hl-1"> </span><span class="hl-4">&#39;GB&#39;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">});</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>11. Lock a collection/document/field combination</summary>
-					<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">lockId</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">lock</span><span style="color: #000000">([</span><span style="color: #A31515">&#039;users&#039;</span><span style="color: #000000">]);</span>
+</details>
+
+<details>
+<summary>9. Delete a document by id</summary>
+
+<pre><code class="language-javascript"><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">delete</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-5">query:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">id:</span><span class="hl-1"> </span><span class="hl-4">&#39;example-uuid-paramater&#39;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">});</span>
 </code></pre>
-				</details>
-				<details>
-					<summary>12. Release a lock</summary>
-					<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">lockId</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">lock</span><span style="color: #000000">([</span><span style="color: #A31515">&#039;users&#039;</span><span style="color: #000000">]);</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">newDocument</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">post</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;users&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;mark&#039;</span>
-<span style="color: #000000">}, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">lockId</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">lockStrategy:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wait&#039;</span><span style="color: #000000"> </span><span style="color: #008000">// optional: can be &#039;fail&#039; or &#039;wait&#039;. default is &#039;wait&#039;.</span>
-<span style="color: #000000">});</span>
-<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">unlock</span><span style="color: #000000">(</span><span style="color: #001080">lockId</span><span style="color: #000000">);</span>
+</details>
+
+<details>
+<summary>10. Delete multiple documents by query</summary>
+
+<pre><code class="language-javascript"><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">delete</span><span class="hl-1">(</span><span class="hl-4">&#39;tests&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-5">query:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">location:</span><span class="hl-1"> </span><span class="hl-4">&#39;GB&#39;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">});</span>
 </code></pre>
-				</details>
-				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
-					<h2>License</h2>
-				</a>
-				<p>This project is licensed under the terms of the MIT license.</p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/constants.html">constants</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/index.html">index</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/utils_validateQueryOptions.html">utils/validate<wbr>Query<wbr>Options</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+</details>
+
+<details>
+<summary>11. Lock a collection/document/field combination</summary>
+
+<pre><code class="language-javascript"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">lockId</span><span class="hl-1"> = </span><span class="hl-7">await</span><span class="hl-1"> </span><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">lock</span><span class="hl-1">([</span><span class="hl-4">&#39;users&#39;</span><span class="hl-1">]);</span>
+</code></pre>
+</details>
+
+<details>
+<summary>12. Release a lock</summary>
+
+<pre><code class="language-javascript"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">lockId</span><span class="hl-1"> = </span><span class="hl-7">await</span><span class="hl-1"> </span><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">lock</span><span class="hl-1">([</span><span class="hl-4">&#39;users&#39;</span><span class="hl-1">]);</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">newDocument</span><span class="hl-1"> = </span><span class="hl-7">await</span><span class="hl-1"> </span><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">post</span><span class="hl-1">(</span><span class="hl-4">&#39;users&#39;</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-5">name:</span><span class="hl-1"> </span><span class="hl-4">&#39;mark&#39;</span><br/><span class="hl-1">}, {</span><br/><span class="hl-1">  </span><span class="hl-5">lockId</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-5">lockStrategy:</span><span class="hl-1"> </span><span class="hl-4">&#39;wait&#39;</span><span class="hl-1"> </span><span class="hl-6">// optional: can be &#39;fail&#39; or &#39;wait&#39;. default is &#39;wait&#39;.</span><br/><span class="hl-1">});</span><br/><span class="hl-7">await</span><span class="hl-1"> </span><span class="hl-5">client</span><span class="hl-1">.</span><span class="hl-3">unlock</span><span class="hl-1">(</span><span class="hl-5">lockId</span><span class="hl-1">);</span>
+</code></pre>
+</details>
+
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p>This project is licensed under the terms of the MIT license.</p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-reference"><a href="modules.html#default" class="tsd-kind-icon">default</a></li><li class="tsd-kind-interface"><a href="interfaces/ClientOptions.html" class="tsd-kind-icon">Client<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/CountOptions.html" class="tsd-kind-icon">Count<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/DeleteOptions.html" class="tsd-kind-icon">Delete<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/GetAllOptions.html" class="tsd-kind-icon">Get<wbr/>All<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/GetOneOptions.html" class="tsd-kind-icon">Get<wbr/>One<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/PatchOptions.html" class="tsd-kind-icon">Patch<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/PostOptions.html" class="tsd-kind-icon">Post<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/PutOptions.html" class="tsd-kind-icon">Put<wbr/>Options</a></li><li class="tsd-kind-function"><a href="modules.html#count" class="tsd-kind-icon">count</a></li><li class="tsd-kind-function"><a href="modules.html#createClient" class="tsd-kind-icon">create<wbr/>Client</a></li><li class="tsd-kind-function"><a href="modules.html#del" class="tsd-kind-icon">del</a></li><li class="tsd-kind-function"><a href="modules.html#getAll" class="tsd-kind-icon">get<wbr/>All</a></li><li class="tsd-kind-function"><a href="modules.html#getOne" class="tsd-kind-icon">get<wbr/>One</a></li><li class="tsd-kind-function"><a href="modules.html#lock" class="tsd-kind-icon">lock</a></li><li class="tsd-kind-function"><a href="modules.html#off" class="tsd-kind-icon">off</a></li><li class="tsd-kind-function"><a href="modules.html#on" class="tsd-kind-icon">on</a></li><li class="tsd-kind-function"><a href="modules.html#patch" class="tsd-kind-icon">patch</a></li><li class="tsd-kind-function"><a href="modules.html#post" class="tsd-kind-icon">post</a></li><li class="tsd-kind-function"><a href="modules.html#put" class="tsd-kind-icon">put</a></li><li class="tsd-kind-function"><a href="modules.html#unlock" class="tsd-kind-icon">unlock</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
