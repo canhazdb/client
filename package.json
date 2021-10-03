@@ -29,9 +29,9 @@
   "homepage": "https://github.com/canhazdb/client#readme",
   "devDependencies": {
     "@types/util.promisify": "^1.0.4",
-    "basictap": "^2.2.1",
+    "basictap": "^2.2.2",
     "c8": "^7.9.0",
-    "typedoc": "^0.22.4",
+    "typedoc": "^0.22.5",
     "typescript": "^4.4.3"
   },
   "dependencies": {
