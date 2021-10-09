@@ -402,16 +402,19 @@ export async function createClient (options: ClientOptions) {
   const notifiers = {};
 
   let ready;
+  let closed = true;
 
   await connection.waitUntilConnected();
 
   function close () {
+    closed = false;
     connection.close();
   }
 
   connection.on('message', data => {
     if (data.command === c.READY) {
       ready = true;
+      closed = false;
       return;
     }
 
@@ -435,7 +438,9 @@ export async function createClient (options: ClientOptions) {
     }
   });
 
-  await waitUntil(() => ready);
+  await waitUntil(() => {
+    return ready || closed
+  });
 
   return {
     connection,
