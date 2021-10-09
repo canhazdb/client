@@ -36,6 +36,6 @@
   },
   "dependencies": {
     "mql-to-jql": "^1.4.0",
-    "tcpocket": "^7.4.2"
+    "tcpocket": "^7.5.0"
   }
 }
