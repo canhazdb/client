@@ -2,32 +2,40 @@
   "name": "canhazdb-client",
   "version": "1.1.3",
   "description": "Talk to a restful api using database like functions.",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "type": "module",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
-    "test": "./makeCerts.sh && node test"
+    "prepare": "tsc",
+    "docs:build": "typedoc src",
+    "test": "./makeCerts.sh && c8 node test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/canhazdb/client.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "AGPL-3.0",
+  "author": {
+    "name": "Mark Wylde",
+    "email": "me@markwylde.com",
+    "url": "https://github.com/markwylde"
+  },
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/canhazdb/client/issues"
   },
   "homepage": "https://github.com/canhazdb/client#readme",
   "devDependencies": {
-    "basictap": "^1.1.13",
-    "canhazdb-driver-ejdb": "^1.1.3",
-    "canhazdb-server": "^7.0.2"
+    "@types/util.promisify": "^1.0.4",
+    "basictap": "^2.2.2",
+    "c8": "^7.9.0",
+    "typedoc": "^0.22.5",
+    "typescript": "^4.4.3"
   },
   "dependencies": {
-    "final-stream": "^2.0.3",
-    "reconnecting-websocket": "^4.4.0",
-    "ws": "^7.4.6"
+    "mql-to-jql": "^1.4.0",
+    "tcpocket": "^7.5.2"
   }
 }

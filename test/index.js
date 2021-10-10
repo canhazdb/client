@@ -1,8 +1,8 @@
-const fs = require('fs');
+import fs from 'fs';
+import test from 'basictap';
+import createClient from '../lib/index.js';
 
-const test = require('basictap');
-
-const createClient = require('../');
+import canhazdbServer from 'canhazdb-server';
 
 const tls = {
   key: fs.readFileSync('./certs/localhost.privkey.pem'),
@@ -11,53 +11,58 @@ const tls = {
 };
 
 async function canhazdb (options) {
-  await fs.promises.rmdir('./canhazdata', { recursive: true });
-  return require('canhazdb-server')(options);
+  await fs.promises.rm('./canhazdata', { recursive: true })
+    .catch(_ => {});
+  return canhazdbServer(options);
 }
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 test('unknown keys', async t => {
-  t.plan(7);
+  t.plan(8);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
-  client.getOne('tests', { wrongKey: 1 }).catch(error => {
+  await client.getOne('tests', { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.getAll('tests', { wrongKey: 1 }).catch(error => {
+  await client.getAll('tests', { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.post('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
+  await client.post('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.put('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
+  await client.put('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.patch('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
+  await client.patch('tests', { a: 1 }, { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.delete('tests', { wrongKey: 1 }).catch(error => {
+  await client.delete('tests', { wrongKey: 1 }).catch(error => {
     t.equal(error.message, 'canhazdb error: unknown keys wrongKey');
   });
 
-  client.lock('not array').catch(error => {
+  await client.lock('not array').catch(error => {
     t.equal(error.message, 'canhazdb error: keys must be array but got not array');
   });
 
   await node.close();
   await client.close();
+
+  t.pass();
 });
 
 test('lock and unlock', async t => {
   t.plan(5);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   const lock1 = client.lock(['tests']).then(async lockId => {
     t.pass('lock 1 ran');
@@ -87,21 +92,21 @@ test('count', async t => {
   t.plan(1);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   const result = await client.count('tests');
 
   await node.close();
   await client.close();
 
-  t.deepEqual(result, { documentCount: 0 });
+  t.deepEqual(result, 0);
 });
 
 test('get', async t => {
   t.plan(1);
 
-  const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const node = await canhazdb({ host: 'localhost', port: 8060, tls, single: true });
+  const client = await createClient(node.clientConfig);
 
   const result = await client.getAll('tests');
 
@@ -114,8 +119,8 @@ test('get', async t => {
 test('get with limit', async t => {
   t.plan(1);
 
-  const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const node = await canhazdb({ host: 'localhost', port: 8060, tls, single: true });
+  const client = await createClient(node.clientConfig);
 
   await Promise.all([
     await client.post('tests', { a: 1 }),
@@ -131,11 +136,46 @@ test('get with limit', async t => {
   t.deepEqual(result.length, 2);
 });
 
+test('getOne', async t => {
+  t.plan(1);
+
+  const node = await canhazdb({ host: 'localhost', port: 8060, tls, single: true });
+  const client = await createClient(node.clientConfig);
+
+  await Promise.all([
+    await client.post('tests', { a: 1 }),
+    await client.post('tests', { a: 2 }),
+    await client.post('tests', { a: 3 })
+  ]);
+
+  const result = await client.getOne('tests');
+
+  await node.close();
+  await client.close();
+
+  t.deepEqual(result.a, 3);
+});
+
+test('post and count', async t => {
+  t.plan(1);
+
+  const node = await canhazdb({ host: 'localhost', tls, single: true });
+  const client = await createClient(node.clientConfig);
+
+  await client.post('tests', { a: 1 });
+  const result = await client.count('tests');
+
+  await node.close();
+  await client.close();
+
+  t.deepEqual(result, 1);
+});
+
 test('post and get', async t => {
   t.plan(1);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   await client.post('tests', { a: 1 });
   const result = await client.getAll('tests');
@@ -150,7 +190,7 @@ test('post and get specific fields', async t => {
   t.plan(1);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   await client.post('tests', { a: 1, b: 2, c: 3 });
   const result = await client.getAll('tests', { fields: ['b'] });
@@ -168,7 +208,7 @@ test('post, put and get', async t => {
   t.plan(5);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   await client.post('tests', { a: 1 });
   const document = await client.post('tests', { a: 2 });
@@ -179,7 +219,7 @@ test('post, put and get', async t => {
   await client.close();
 
   t.deepEqual(document.a, 2);
-  t.deepEqual(putted.changes, 1);
+  t.deepEqual(putted.changes.length, 1);
   t.ok(reget.id);
   t.ok(reget.b);
   t.deepEqual(reget.b, 3);
@@ -189,7 +229,7 @@ test('post, patch and get', async t => {
   t.plan(6);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   await client.post('tests', { a: 1 });
   const document = await client.post('tests', { a: 2 });
@@ -200,7 +240,7 @@ test('post, patch and get', async t => {
   await client.close();
 
   t.deepEqual(document.a, 2);
-  t.deepEqual(patched.changes, 1);
+  t.deepEqual(patched.changes.length, 1);
   t.ok(reget.id);
   t.ok(reget.b);
   t.deepEqual(reget.a, 2);
@@ -211,7 +251,7 @@ test('post, delete and get', async t => {
   t.plan(3);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   const document = await client.post('tests', { a: 1 });
   const deletion = await client.delete('tests', { query: { id: document.id } });
@@ -221,14 +261,15 @@ test('post, delete and get', async t => {
   await client.close();
 
   t.deepEqual(document.a, 1);
-  t.deepEqual(deletion.changes, 1);
+  t.deepEqual(deletion.changes.length, 1);
   t.notOk(reget);
 });
 
 test('serialise undefined', async t => {
-  t.plan(5);
+  t.plan(6);
 
-  const client = await createClient('http://example.com', { disableNotify: true });
+  const node = await canhazdb({ host: 'localhost', tls, single: true });
+  const client = await createClient(node.clientConfig);
 
   try {
     await client.getAll('test', { query: { un: undefined } });
@@ -261,13 +302,16 @@ test('serialise undefined', async t => {
   }
 
   await client.close();
+  await node.close();
+
+  t.pass('sockets closed');
 });
 
 test('invalid query - getAll', async t => {
-  t.plan(2);
+  t.plan(3);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   await client.post('tests', { a: 1 });
 
@@ -278,24 +322,24 @@ test('invalid query - getAll', async t => {
       }
     });
   } catch (error) {
-    t.equal(error.message, 'canhazdb error');
-    t.deepEqual(error.data, {
-      error: error.data.error,
-      type: 'GET',
-      collectionId: 'tests',
-      query: { $nin: ['1'] }
+    await node.close();
+    await client.close();
+
+    t.equal(error.message, 'canhazdb client: key "$nin" has an invalid value of ["1"]. must be ["$eq","$ne","$gt","$gte","$lt","$lte","$exists","$null","$in","$nin"]');
+    t.equal(error.statusCode, 'STATUS_BAD_REQUEST');
+    t.deepEqual(error.request, {
+      query: {
+        $nin: ['1']
+      }
     });
   }
-
-  await node.close();
-  await client.close();
 });
 
 test('invalid query - getOne', async t => {
-  t.plan(2);
+  t.plan(3);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   await client.post('tests', { a: 1 });
 
@@ -306,25 +350,24 @@ test('invalid query - getOne', async t => {
       }
     });
   } catch (error) {
-    t.equal(error.message, 'canhazdb error');
-    t.deepEqual(error.data, {
-      error: error.data.error,
-      type: 'GET',
-      collectionId: 'tests',
-      query: { $nin: ['1'] },
-      limit: 1
+    await node.close();
+    await client.close();
+
+    t.equal(error.message, 'canhazdb client: key "$nin" has an invalid value of ["1"]. must be ["$eq","$ne","$gt","$gte","$lt","$lte","$exists","$null","$in","$nin"]');
+    t.equal(error.statusCode, 'STATUS_BAD_REQUEST');
+    t.deepEqual(error.request, {
+      query: {
+        $nin: ['1']
+      }
     });
   }
-
-  await node.close();
-  await client.close();
 });
 
 test('invalid query - put', async t => {
-  t.plan(2);
+  t.plan(3);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   await client.post('tests', { a: 1 });
 
@@ -335,24 +378,24 @@ test('invalid query - put', async t => {
       }
     });
   } catch (error) {
-    t.equal(error.message, 'canhazdb error');
-    t.deepEqual(error.data, {
-      error: error.data.error,
-      type: 'PUT',
-      collectionId: 'tests',
-      query: { $nin: ['1'] }
+    await node.close();
+    await client.close();
+
+    t.equal(error.message, 'canhazdb client: key "$nin" has an invalid value of ["1"]. must be ["$eq","$ne","$gt","$gte","$lt","$lte","$exists","$null","$in","$nin"]');
+    t.equal(error.statusCode, 'STATUS_BAD_REQUEST');
+    t.deepEqual(error.request, {
+      query: {
+        $nin: ['1']
+      }
     });
   }
-
-  await node.close();
-  await client.close();
 });
 
 test('invalid query - patch', async t => {
-  t.plan(2);
+  t.plan(3);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   await client.post('tests', { a: 1 });
 
@@ -363,24 +406,24 @@ test('invalid query - patch', async t => {
       }
     });
   } catch (error) {
-    t.equal(error.message, 'canhazdb error');
-    t.deepEqual(error.data, {
-      error: error.data.error,
-      type: 'PATCH',
-      collectionId: 'tests',
-      query: { $nin: ['1'] }
+    await node.close();
+    await client.close();
+
+    t.equal(error.message, 'canhazdb client: key "$nin" has an invalid value of ["1"]. must be ["$eq","$ne","$gt","$gte","$lt","$lte","$exists","$null","$in","$nin"]');
+    t.equal(error.statusCode, 'STATUS_BAD_REQUEST');
+    t.deepEqual(error.request, {
+      query: {
+        $nin: ['1']
+      }
     });
   }
-
-  await node.close();
-  await client.close();
 });
 
 test('invalid query - delete', async t => {
-  t.plan(2);
+  t.plan(3);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   await client.post('tests', { a: 1 });
 
@@ -391,29 +434,29 @@ test('invalid query - delete', async t => {
       }
     });
   } catch (error) {
-    t.equal(error.message, 'canhazdb error');
-    t.deepEqual(error.data, {
-      error: error.data.error,
-      type: 'DELETE',
-      collectionId: 'tests',
-      query: { $nin: ['1'] }
+    await node.close();
+    await client.close();
+
+    t.equal(error.message, 'canhazdb client: key "$nin" has an invalid value of ["1"]. must be ["$eq","$ne","$gt","$gte","$lt","$lte","$exists","$null","$in","$nin"]');
+    t.equal(error.statusCode, 'STATUS_BAD_REQUEST');
+    t.deepEqual(error.request, {
+      query: {
+        $nin: ['1']
+      }
     });
   }
-
-  await node.close();
-  await client.close();
 });
 
 test('post and notify', async t => {
-  t.plan(5);
+  t.plan(6);
 
   const node = await canhazdb({ host: 'localhost', port: 11505, queryPort: 11506, tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   let alreadyHandled = false;
 
   return new Promise((resolve) => {
-    async function handler (path, collectionId, resourceId, pattern) {
+    async function handler (path, method, collectionId, resourceId, pattern) {
       if (alreadyHandled) {
         t.fail('handler should only be called once');
       }
@@ -427,6 +470,7 @@ test('post and notify', async t => {
       });
 
       t.equal(pattern, 'POST:/tests');
+      t.equal(method, 'POST');
       t.ok(path.startsWith('POST:/tests/'), 'path starts with /tests/');
       t.equal(path.length, 48);
       t.equal(collectionId, 'tests');
@@ -442,14 +486,14 @@ test('post and notify', async t => {
 });
 
 test('post and notify to multiple', async t => {
-  t.plan(6);
+  t.plan(7);
 
   const node = await canhazdb({ host: 'localhost', tls, single: true });
-  const client = createClient(node.url, { tls });
+  const client = await createClient(node.clientConfig);
 
   let alreadyHandled = false;
 
-  async function handler (path, collectionId, resourceId, pattern) {
+  async function handler (path, method, collectionId, resourceId, pattern) {
     if (alreadyHandled) {
       t.fail('handler should only be called once');
     }
@@ -461,6 +505,7 @@ test('post and notify to multiple', async t => {
     });
 
     t.equal(pattern, 'POST:/tests');
+    t.equal(method, 'POST');
     t.ok(path.startsWith('POST:/tests/'), 'path starts with /tests/');
     t.equal(path.length, 48);
     t.equal(collectionId, 'tests');
@@ -473,8 +518,9 @@ test('post and notify to multiple', async t => {
   async function gotCalled () {
     calls = calls + 1;
     if (calls === 2) {
-      await node.close();
+      await sleep(100);
       await client.close();
+      await node.close();
       t.pass('got called twice');
     }
   }
