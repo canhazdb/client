@@ -389,7 +389,9 @@ export interface ClientOptions {
   port: number,
   key?: string,
   cert?: string,
-  ca?: string
+  ca?: string,
+
+  connection?: any
 }
 /**
  * Create a connection to a canhazdb server
@@ -397,14 +399,16 @@ export interface ClientOptions {
  * @name createClient
  */
 export async function createClient (options: ClientOptions) {
-  const connection = tcpocket.createClient(options);
+  const connection = options.connection || tcpocket.createClient(options);
 
   const notifiers = {};
 
   let ready;
   let closed = true;
 
-  await connection.waitUntilConnected();
+  if (!options.connection) {
+    await connection.waitUntilConnected();
+  }
 
   function close () {
     closed = false;
